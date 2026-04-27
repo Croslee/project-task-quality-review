@@ -1,49 +1,45 @@
 # Project Task Quality Review
+## What It Does
+- Adds a Quality Inspector to each project.
+- Marks tasks as QA-approved with a dedicated button.
+- Auto-assigns the inspector when a task enters the review stage.
+- Blocks task completion until QA has passed.
 
-## Module Description
-Project Task Quality Review extends Odoo Project with a mandatory quality gate before task completion.
-
-Each project can define a Quality Inspector, and tasks can only be completed after QA approval.
-
-## Core Features
-- Adds project-level field: Quality Inspector (quality_inspector_id).
-- Adds task-level QA fields:
-  - Quality Review Passed (is_done)
-  - Quality Inspected On (quality_inspected_date)
-- Adds stage-level flag: Is Review Stage (is_review_stage) on task stages.
-- Auto-assigns the project inspector to task assignees when task enters a review stage.
-- Adds Mark Review Passed button on task form header.
-- Blocks task completion if QA has not passed.
-- Supports state-based completion and closed-stage completion checks.
-
-## Security Model
-- Only the configured project Quality Inspector or an Administrator can execute Mark Review Passed.
-- The action cannot be executed twice for the same task.
-- No sudo usage in business logic.
+## Requirements
+- Odoo 19
+- A custom addons path containing this module
+- Access to the Odoo server source or running environment
 
 ## Installation
-1. Place module folder project_task_quality_review into your custom addons path.
-2. Restart Odoo service.
-3. Update Apps List.
-4. Install Project Task Quality Review.
+1. Copy the `project_task_quality_review` folder into your custom addons directory.
+2. Add that directory to `addons_path` in your Odoo configuration if it is not already included.
+3. Restart the Odoo server.
+4. Enable Developer Mode in Odoo.
+5. Go to Apps and click Update Apps List.
+6. Search for `Project Task Quality Review`.
+7. Click Install.
 
-## Usage Workflow
-1. Open a project and set Quality Inspector.
-2. Ensure your review stage is flagged with Is Review Stage.
-3. Move a task into a review stage.
-4. Module auto-adds the Quality Inspector to task assignees if not already assigned.
-5. Inspector (or Administrator) opens the task and clicks Mark Review Passed.
-6. Module sets is_done and quality_inspected_date.
-7. Task can then move to Done or another closed stage.
+## How to Run
+1. Open a Project.
+2. Set the `Quality Inspector` field.
+3. Open or create a Task under that project.
+4. Move the task into the review stage flagged as `Is Review Stage`.
+5. The project’s Quality Inspector is automatically added to the task’s assignees.
+6. The inspector opens the task and clicks `Mark Review Passed`.
+7. The module sets `is_done = True` and records `quality_inspected_date`.
+8. After approval, the task can be moved to Done.
+
+## Behavior Notes
+- If a task is moved to Done before QA approval, Odoo raises a `ValidationError`.
+- The `Mark Review Passed` button is hidden once the task is approved.
+- The approval action cannot be executed twice.
+- Only the configured inspector or an Administrator can approve the task.
 
 ## Example Scenario
-1. Project Website Revamp sets QA Lead as Quality Inspector.
-2. Developer moves task Checkout Validation to Ready for Review.
-3. QA Lead is auto-assigned to the task.
-4. QA Lead clicks Mark Review Passed.
-5. Task stores QA approval date.
-6. Task is moved to Done.
+1. Project `Website Revamp` assigns `QA Lead` as Quality Inspector.
+2. A developer moves task `Checkout Validation` to the review stage.
+3. `QA Lead` is auto-assigned to the task.
+4. `QA Lead` clicks `Mark Review Passed`.
+5. The task stores the QA approval timestamp.
+6. The team moves the task to Done successfully.
 
-If QA approval is missing, completion is blocked with:
-
-Task must pass quality review before being marked as Done.
