@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_form_inherit_quality_review" model="ir.ui.view">
+        <field name="name">project.project.form.quality.review</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='settings']//group[1]" position="inside">
+                <field name="quality_inspector_id" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

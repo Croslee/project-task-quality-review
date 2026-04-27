@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="project_task_type_ready_for_review" model="project.task.type">
+        <field name="name">Ready for Review</field>
+        <field name="sequence" eval="60"/>
+        <field name="fold" eval="False"/>
+        <field name="is_review_stage" eval="True"/>
+    </record>
+</odoo>

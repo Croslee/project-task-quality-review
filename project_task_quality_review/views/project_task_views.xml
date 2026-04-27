@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form2_inherit_quality_review" model="ir.ui.view">
+        <field name="name">project.task.form.quality.review</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_mark_review_passed"
+                    type="object"
+                    string="Mark Review Passed"
+                    class="btn-primary"
+                    invisible="is_done"
+                />
+            </xpath>
+
+            <xpath expr="//page[@name='extra_info']//group[1]" position="inside">
+                <field name="is_done" readonly="1"/>
+                <field name="quality_inspected_date" readonly="1" invisible="not is_done"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
